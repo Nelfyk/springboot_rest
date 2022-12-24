@@ -1,10 +1,9 @@
 package com.ruslanburduzhan.spring.springboot_rest.service;
 
-import com.ruslanburduzhan.spring.springboot_rest.dao.EmployeeDAO;
+import com.ruslanburduzhan.spring.springboot_rest.dao.EmployeeRepository;
 import com.ruslanburduzhan.spring.springboot_rest.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,29 +11,31 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
-    EmployeeDAO employeeDAO;
+    EmployeeRepository employeeRepository;
 
     @Override
-    @Transactional
     public List<Employee> getAllEmployees() {
-        return employeeDAO.getAllEmployees();
+        return employeeRepository.findAll();
     }
 
     @Override
-    @Transactional
     public Employee getEmployee(int id) {
-        return employeeDAO.getEmployee(id);
+        // если Employee отсутствует, вернуть значение по умолчанию
+        return employeeRepository.findById(id).orElse(null);
     }
 
     @Override
-    @Transactional
     public void saveEmployee(Employee employee) {
-        employeeDAO.saveEmployee(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
-    @Transactional
     public void deleteEmployee(int id) {
-        employeeDAO.deleteEmployee(id);
+        employeeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Employee> findAllByName(String name) {
+        return employeeRepository.findAllByName(name);
     }
 }

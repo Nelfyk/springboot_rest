@@ -12,4 +12,6 @@ public interface EmployeeService {
     void saveEmployee(Employee employee);
 
     void deleteEmployee(int id);
+
+    List<Employee> findAllByName(String name);
 }

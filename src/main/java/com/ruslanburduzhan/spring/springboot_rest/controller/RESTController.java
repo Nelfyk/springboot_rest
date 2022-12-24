@@ -40,4 +40,9 @@ public class RESTController {
         employeeService.deleteEmployee(id);
         return "Employee with ID = " + id + " was deleted.";
     }
+
+    @GetMapping("/employees/name/{name}")
+    public List<Employee> getEmployeeByName(@PathVariable String name){
+        return employeeService.findAllByName(name);
+    }
 }
